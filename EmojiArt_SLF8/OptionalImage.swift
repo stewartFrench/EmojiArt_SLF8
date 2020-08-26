@@ -8,14 +8,17 @@
 
 import SwiftUI
 
-struct OptionalImage: View {
+struct OptionalImage: View 
+{
     var uiImage: UIImage?
     
-    var body: some View {
-        Group {
-            if uiImage != nil {
-                Image(uiImage: uiImage!)
-            }
-        }
-    }
-}
+    var body: some View 
+    {
+        Group 
+        {
+            if uiImage != nil 
+            { Image(uiImage: uiImage!) }
+        }  // end Group
+    }  // end var body
+
+}  // end struct OptionalImage

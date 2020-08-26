@@ -59,7 +59,7 @@ struct EmojiArtDocumentView: View
         .edgesIgnoringSafeArea([.horizontal, .bottom])
 
         .onDrop( 
-                 of: ["public.image","public.text"], 
+                   of: ["public.image","public.text"], 
            isTargeted: nil )
         { providers, location in
 
