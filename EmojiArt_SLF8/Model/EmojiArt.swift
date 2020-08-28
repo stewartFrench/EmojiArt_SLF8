@@ -86,4 +86,15 @@ struct EmojiArt: Codable
            size: size, 
              id: uniqueEmojiId ) )
   }  // end func addEmoji
+
+
+  //----------------
+  mutating func removeEmoji( anEmoji: Emoji )
+  {
+    emojis = 
+      emojis.filter
+      { $0 != anEmoji }
+
+  }  // end func removeEmoji
+
 }  // end struct EmojiArt

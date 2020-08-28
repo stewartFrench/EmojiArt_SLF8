@@ -52,6 +52,13 @@ class EmojiArtDocument: ObservableObject
   var emojis: [EmojiArt.Emoji] { emojiArt.emojis }
   
 
+            // When one taps on a dropped emoji it will be added to
+            // this array.  If it was already in this array then it
+            // will be removed.
+            
+  @Published var selectedEmojis: [EmojiArt.Emoji] = []
+
+
   //----------------------------
   // MARK: - Intent(s)
   
@@ -136,6 +143,69 @@ class EmojiArtDocument: ObservableObject
     UserDefaults.standard.removeObject(
         forKey: EmojiArtDocument.untitled )
   }  // end func clearUI
+
+
+  //----------------
+  func addToSelected( tappedEmoji: EmojiArt.Emoji )
+  {
+    if selectedEmojis.contains( tappedEmoji )
+    {
+      selectedEmojis = 
+          selectedEmojis.filter
+            { $0 != tappedEmoji }
+    }
+    else
+    {
+      selectedEmojis.append( tappedEmoji )
+    }
+  }  // end func addToSelected
+
+
+  //----------------
+  func unSelectAllEmojis()
+  {
+            // Remove the selected emojis from the selected emoji array
+
+    for tEmoji in selectedEmojis
+    {
+      selectedEmojis = 
+          selectedEmojis.filter
+            { $0 != tEmoji }
+    }
+  }  // end func unSelectAllEmojis
+
+
+  //----------------
+  func emojiSelected( tappedEmoji: EmojiArt.Emoji ) -> Bool
+  {
+    if selectedEmojis.contains( tappedEmoji )
+    { return true }
+    else
+    { return false }
+  }  // end func emojiSelected
+
+
+  //----------------
+  func removeSelectedEmojis()
+  {
+            // Remove the selected emojis from the model's emoji array
+
+    for tEmoji in selectedEmojis
+    {
+      emojiArt.removeEmoji( anEmoji: tEmoji )
+    }
+            // Remove the selected emojis from the selected emoji array
+
+    for tEmoji in selectedEmojis
+    {
+      selectedEmojis = 
+          selectedEmojis.filter
+            { $0 != tEmoji }
+    }
+
+  }  // end func removeSelectedEmojis
+
+
 
 }  // end class EmojiArtDocument
 

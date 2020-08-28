@@ -44,6 +44,7 @@ struct EmojiArtDocumentView: View
           action:
           {
             print( "Delete Emoji button pressed" )
+            self.document.removeSelectedEmojis()
           }   )
           {
             Text("Delete Emoji")
@@ -86,11 +87,23 @@ struct EmojiArtDocumentView: View
               .offset(self.panOffset)
           )
             .gesture(self.doubleTapToZoom(in: geometry.size))
+            .onTapGesture
+            {
+              self.document.unSelectAllEmojis()
+            }
           ForEach(self.document.emojis) 
           { emoji in
             Text(emoji.text)
               .font(animatableWithSize: emoji.fontSize * self.zoomScale)
+              .background( 
+                self.document.emojiSelected( 
+                  tappedEmoji: emoji ) ? Color.yellow : Color.clear )
+              .cornerRadius( 100 )
               .position(self.position(for: emoji, in: geometry.size))
+              .onTapGesture
+              {
+                self.document.addToSelected( tappedEmoji: emoji )
+              }
           }  // end ForEach
         }  // end ZStack
         .clipped()
