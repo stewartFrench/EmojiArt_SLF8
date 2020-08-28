@@ -67,17 +67,12 @@
 		717DDE0C24F6A00E005DE1C1 /* EmojiArt_SLF8 */ = {
 			isa = PBXGroup;
 			children = (
-				717DDE2D24F6A099005DE1C1 /* EmojiArt_SLF8.entitlements */,
-				717DDE0D24F6A00E005DE1C1 /* AppDelegate.swift */,
-				717DDE0F24F6A00E005DE1C1 /* SceneDelegate.swift */,
-				717DDE2324F6A072005DE1C1 /* AnimatableSystemFontModifier.swift */,
-				717DDE2124F6A072005DE1C1 /* EmojiArt.swift */,
-				717DDE2624F6A072005DE1C1 /* EmojiArtDocument.swift */,
-				717DDE2424F6A072005DE1C1 /* EmojiArtDocumentView.swift */,
-				717DDE2224F6A072005DE1C1 /* EmojiArtExtensions.swift */,
-				717DDE2524F6A072005DE1C1 /* OptionalImage.swift */,
+				718D6D4F24F94132000B8DC9 /* Common */,
+				718D6D4E24F94116000B8DC9 /* Model */,
+				718D6D4D24F940F9000B8DC9 /* ViewModel */,
+				718D6D4C24F940D5000B8DC9 /* View */,
 				717DDE1324F6A00F005DE1C1 /* Assets.xcassets */,
-				717DDE1824F6A00F005DE1C1 /* LaunchScreen.storyboard */,
+				717DDE2D24F6A099005DE1C1 /* EmojiArt_SLF8.entitlements */,
 				717DDE1B24F6A00F005DE1C1 /* Info.plist */,
 				717DDE1524F6A00F005DE1C1 /* Preview Content */,
 			);
@@ -90,6 +85,43 @@
 				717DDE1624F6A00F005DE1C1 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		718D6D4C24F940D5000B8DC9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				717DDE2424F6A072005DE1C1 /* EmojiArtDocumentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		718D6D4D24F940F9000B8DC9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				717DDE2524F6A072005DE1C1 /* OptionalImage.swift */,
+				717DDE2224F6A072005DE1C1 /* EmojiArtExtensions.swift */,
+				717DDE2624F6A072005DE1C1 /* EmojiArtDocument.swift */,
+				717DDE2324F6A072005DE1C1 /* AnimatableSystemFontModifier.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		718D6D4E24F94116000B8DC9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				717DDE2124F6A072005DE1C1 /* EmojiArt.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		718D6D4F24F94132000B8DC9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				717DDE0D24F6A00E005DE1C1 /* AppDelegate.swift */,
+				717DDE0F24F6A00E005DE1C1 /* SceneDelegate.swift */,
+				717DDE1824F6A00F005DE1C1 /* LaunchScreen.storyboard */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

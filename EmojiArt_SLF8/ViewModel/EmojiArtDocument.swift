@@ -26,6 +26,9 @@ class EmojiArtDocument: ObservableObject
     }
     didSet 
     {
+//      UserDefaults.standard.removeObject(
+//           forKey: EmojiArtDocument.untitled )
+
       UserDefaults.standard.set(
                    emojiArt.json, 
            forKey: EmojiArtDocument.untitled )
@@ -123,7 +126,21 @@ class EmojiArtDocument: ObservableObject
 
   }  // end func fetchBackgroundImageData
 
+
+  //----------------
+  func clearUI()
+  {
+    emojiArt.emojis = [EmojiArt.Emoji]()
+    backgroundImage = nil
+
+    UserDefaults.standard.removeObject(
+        forKey: EmojiArtDocument.untitled )
+  }  // end func clearUI
+
 }  // end class EmojiArtDocument
+
+
+  
 
 
 

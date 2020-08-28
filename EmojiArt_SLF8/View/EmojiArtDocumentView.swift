@@ -20,22 +20,62 @@ struct EmojiArtDocumentView: View
   {
     VStack 
     {
-      ScrollView(.horizontal) 
+      HStack
       {
-        HStack 
+        ScrollView(.horizontal) 
         {
-          ForEach(EmojiArtDocument.palette.map { String($0) }, id: \.self) 
-          { emoji in
-            Text(emoji)
-              .font( Font.system( size: self.defaultEmojiSize ) )
-              .onDrag 
-              { 
-                NSItemProvider( object: emoji as NSString )
-              }
-          }  // end ForEach
-        }  // end HStack
-      }  // end ScrollView
-      .padding(.horizontal)
+          HStack 
+          {
+            ForEach(EmojiArtDocument.palette.map { String($0) }, id: \.self) 
+            { emoji in
+              Text(emoji)
+                .font( Font.system( size: self.defaultEmojiSize ) )
+                .onDrag 
+                { 
+                  NSItemProvider( object: emoji as NSString )
+                }
+            }  // end ForEach
+          }  // end HStack
+        }  // end ScrollView
+//        .padding(.horizontal)
+
+        Spacer()
+        Button(
+          action:
+          {
+            print( "Delete Emoji button pressed" )
+          }   )
+          {
+            Text("Delete Emoji")
+              .fontWeight(.bold)
+              .font(.body)
+              .frame(minWidth: 200, maxWidth: 200, minHeight: 40, maxHeight: 40)
+              .background(Color.red)
+              .cornerRadius(40)
+              .foregroundColor(.white)
+          }  // end Button
+          .padding()
+
+        Button(
+          action:
+          {
+            self.document.clearUI()
+            print( "Clear button pressed" )
+          }   )
+          {
+            Text("Clear")
+              .fontWeight(.bold)
+              .font(.body)
+              .frame(minWidth: 200, maxWidth: 200, minHeight: 40, maxHeight: 40)
+              .background(Color.red)
+              .cornerRadius(40)
+              .foregroundColor(.white)
+              .frame(minWidth: 200, maxWidth: 200, minHeight: 80, maxHeight: 80)
+          }  // end Button
+
+      }  // end HStack	  
+
+
       GeometryReader 
       { geometry in
         ZStack 
