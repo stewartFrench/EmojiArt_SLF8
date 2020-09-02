@@ -84,7 +84,7 @@ struct EmojiArtDocumentView: View
           Color.white.overlay(
             OptionalImage(uiImage: self.document.backgroundImage)
               .scaleEffect(self.zoomScale)
-              .offset(self.panOffset)
+//              .offset(self.panOffset)
           )
             .gesture(self.doubleTapToZoom(in: geometry.size))
             .onTapGesture
@@ -100,15 +100,20 @@ struct EmojiArtDocumentView: View
                   tappedEmoji: emoji ) ? Color.yellow : Color.clear )
               .cornerRadius( 100 )
               .position(self.position(for: emoji, in: geometry.size))
+
               .onTapGesture
               {
-                self.document.addToSelected( tappedEmoji: emoji )
+                print( "Within onTapGesture()" )
+                self.document.toggleSelected( tappedEmoji: emoji )
               }
+
+              .gesture(self.panEmojiGesture( anEmoji: emoji ))
+
           }  // end ForEach
         }  // end ZStack
         .clipped()
-        .gesture(self.panGesture())
-        .gesture(self.zoomGesture())
+//        .gesture(self.panGesture())
+//        .gesture(self.zoomGesture())
         .edgesIgnoringSafeArea([.horizontal, .bottom])
 
         .onDrop( 
@@ -174,16 +179,39 @@ struct EmojiArtDocumentView: View
   }  // end func zoomGesture
   
 
+  //----------------
+  private func zoomEmojiGesture() -> some Gesture 
+  {
+    MagnificationGesture()
+      .updating( $gestureZoomScale )
+      { latestGestureScale, gestureZoomScale, transaction in
+        gestureZoomScale = latestGestureScale
+      }
+      .onEnded 
+      { finalGestureScale in
+        self.steadyStateZoomScale *= finalGestureScale
+      }
+  }  // end func zoomEmojiGesture
+  
+
   @State private var steadyStatePanOffset: CGSize = .zero
   @GestureState private var gesturePanOffset: CGSize = .zero
   
+  @State private var selectedSteadyStatePanOffset: CGSize = .zero
+  @GestureState private var selectedGesturePanOffset: CGSize = .zero
 
   //----------------
   private var panOffset: CGSize 
   {
     (steadyStatePanOffset + gesturePanOffset) * zoomScale
   }
-  
+
+  //----------------
+  private var selectedPanOffset: CGSize 
+  {
+    (selectedSteadyStatePanOffset + selectedGesturePanOffset) * zoomScale
+  }
+
 
   //----------------
   private func panGesture() -> some Gesture 
@@ -199,7 +227,37 @@ struct EmojiArtDocumentView: View
           self.steadyStatePanOffset + 
             ( finalDragGestureValue.translation / self.zoomScale )
       }
-  }
+  }  // end panGesture
+
+  
+  //----------------
+  private func panEmojiGesture( anEmoji: EmojiArt.Emoji ) -> some Gesture 
+  {
+    DragGesture()
+      .updating($selectedGesturePanOffset) 
+      { latestDragGestureValue, selectedGesturePanOffset, transaction in
+        print( "Within panEmojiGesture()" )
+        if self.document.emojiSelected( tappedEmoji: anEmoji )
+        {
+          selectedGesturePanOffset = 
+            latestDragGestureValue.translation / self.zoomScale
+        }
+      }
+      .onEnded 
+      { finalDragGestureValue in
+        if self.document.emojiSelected( tappedEmoji: anEmoji )
+        {
+          self.selectedSteadyStatePanOffset = 
+            self.selectedSteadyStatePanOffset + 
+              ( finalDragGestureValue.translation / self.zoomScale )
+
+          self.document.moveEmoji( 
+                  anEmoji, by: self.selectedSteadyStatePanOffset )
+          self.selectedSteadyStatePanOffset = .zero
+
+        }
+      }
+  }  // end panEmojiGesture
 
   
   //----------------
@@ -247,9 +305,18 @@ struct EmojiArtDocumentView: View
                  x: location.x + size.width/2, 
                  y: location.y + size.height/2 )
 
-    location = CGPoint(
-                 x: location.x + panOffset.width, 
-                 y: location.y + panOffset.height )
+    if self.document.emojiSelected( tappedEmoji: emoji )
+    {
+      location = CGPoint(
+                   x: location.x + selectedPanOffset.width, 
+                   y: location.y + selectedPanOffset.height )
+    }
+//    else
+//    {
+//      location = CGPoint(
+//                   x: location.x + panOffset.width, 
+//                   y: location.y + panOffset.height )
+//    }
 
     return location
   }  // end func position

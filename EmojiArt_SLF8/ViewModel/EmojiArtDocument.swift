@@ -146,7 +146,7 @@ class EmojiArtDocument: ObservableObject
 
 
   //----------------
-  func addToSelected( tappedEmoji: EmojiArt.Emoji )
+  func toggleSelected( tappedEmoji: EmojiArt.Emoji )
   {
     if selectedEmojis.contains( tappedEmoji )
     {
@@ -158,7 +158,7 @@ class EmojiArtDocument: ObservableObject
     {
       selectedEmojis.append( tappedEmoji )
     }
-  }  // end func addToSelected
+  }  // end func toggleSelected
 
 
   //----------------
